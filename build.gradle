@@ -30,8 +30,6 @@ repositories {
 }
 
 dependencies {
-    groovy 'org.codehaus.groovy:groovy:1.8.4'
-
     compile 'redis.clients:jedis:2.0.0'
     compile 'com.google.guava:guava:10.0.1'
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.2'
