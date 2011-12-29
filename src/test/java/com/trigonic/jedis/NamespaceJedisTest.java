@@ -27,21 +27,23 @@ import com.google.common.collect.ImmutableMap.Builder;
 
 public class NamespaceJedisTest {
     private Jedis jedis;
-    private NamespaceJedis namespaced;
+    private NamespaceJedisPool namespacedPool;
+    private Jedis namespaced;
 
     @Before
     public void setup() {
         jedis = new Jedis("localhost");
         jedis.flushDB();
 
-        namespaced = new NamespaceJedis("localhost").withNamespace("ns");
+        namespacedPool = new NamespaceJedisPool("localhost").withNamespace("ns");
+        namespaced = namespacedPool.getResource();
 
         jedis.set("foo", "bar");
     }
 
     @After
     public void tearDown() {
-        namespaced.quit();
+        namespacedPool.returnResource(namespaced);
 
         jedis.flushDB();
         jedis.quit();
@@ -277,13 +279,34 @@ public class NamespaceJedisTest {
         namespaced.set("foo", "chris");
         assertEquals("chris", namespaced.get("foo"));
 
-        assertEquals("ns", namespaced.getNamespace());
-        namespaced.setNamespace("test");
-        assertEquals("test", namespaced.getNamespace());
+        assertEquals("ns", ((NamespaceJedis)namespaced).getNamespace());
+        ((NamespaceJedis)namespaced).setNamespace("test");
+        assertEquals("test", ((NamespaceJedis)namespaced).getNamespace());
 
         assertNull(namespaced.get("foo"));
         namespaced.set("foo", "chris");
         assertEquals("chris", namespaced.get("foo"));
+    }
+    
+    @Test
+    public void poolCanChangeItsNamespace() {
+        assertNull(namespaced.get("foo"));
+        namespaced.set("foo", "chris");
+        assertEquals("chris", namespaced.get("foo"));
+
+        assertEquals("ns", ((NamespaceJedis)namespaced).getNamespace());
+        ((NamespaceJedis)namespaced).setNamespace("test");
+        assertEquals("test", ((NamespaceJedis)namespaced).getNamespace());
+
+        assertNull(namespaced.get("foo"));
+        namespaced.set("foo", "alice");
+        assertEquals("alice", namespaced.get("foo"));
+        
+        Jedis secondNamespaced = namespacedPool.getResource();
+        assertEquals("chris", secondNamespaced.get("foo"));        
+        assertEquals("alice", namespaced.get("foo"));       
+        
+        namespacedPool.returnResource(secondNamespaced);
     }
     
     @Test
