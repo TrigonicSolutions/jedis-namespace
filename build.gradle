@@ -16,6 +16,10 @@ configurations {
     deployerJars
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile 'redis.clients:jedis:2.0.0'
     compile 'com.google.guava:guava:10.0.1'
