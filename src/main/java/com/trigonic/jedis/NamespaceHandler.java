@@ -12,12 +12,12 @@ import redis.clients.util.SafeEncoder;
 
 import com.google.common.primitives.Bytes;
 
-public class Namespace {
+public class NamespaceHandler {
     private String namespace;
     private String prefix;
     private byte[] binaryPrefix;
 
-    public Namespace(String namespace) {
+    public NamespaceHandler(String namespace) {
         this.namespace = namespace;
         prefix = namespace + ":";
         binaryPrefix = SafeEncoder.encode(prefix);        
