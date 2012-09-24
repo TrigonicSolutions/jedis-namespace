@@ -12,9 +12,9 @@ import redis.clients.jedis.Tuple;
 import redis.clients.jedis.ZParams;
 
 public class NamespacePipeline extends Pipeline {
-    private Namespace namespace;
+    private NamespaceHandler namespace;
 
-    public NamespacePipeline(Namespace namespace) {
+    public NamespacePipeline(NamespaceHandler namespace) {
         this.namespace = namespace;
     }
 
