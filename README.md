@@ -5,6 +5,17 @@ This adds namespaces to Jedis, similar to
 
 Currently based on Jedis 2.0.0
 
+## Gradle Build
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.trigonic:jedis-namespace:0.1'
+    }
+
+
 ## Usage
 
 To use, you construct a `NamespaceJedis` instance with the same constructor
