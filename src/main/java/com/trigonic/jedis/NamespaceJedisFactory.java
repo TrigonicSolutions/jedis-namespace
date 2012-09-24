@@ -25,11 +25,10 @@ public class NamespaceJedisFactory extends BasePoolableObjectFactory {
     public Object makeObject() throws Exception {
         final NamespaceJedis jedis;
         if (timeout > 0) {
-            jedis = new NamespaceJedis(this.host, this.port, this.timeout);
+            jedis = new NamespaceJedis(namespace.get(), new Jedis(this.host, this.port, this.timeout));
         } else {
-            jedis = new NamespaceJedis(this.host, this.port);
+            jedis = new NamespaceJedis(namespace.get(), new Jedis(this.host, this.port));
         }
-        jedis.setNamespace(namespace.get());
 
         jedis.connect();
         if (null != this.password) {
