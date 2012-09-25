@@ -388,6 +388,26 @@ public class NamespaceJedisTest {
         assertEquals(asList("20", "30"), response5.get());
         assertEquals(asList("30", "40"), response6.get());
     }
+    
+    @Test
+    public void canReturnAndCheckoutUsableResource() {
+        namespaced.set("breadcrumb", "something");
+        assertEquals("something", jedis.get("ns:breadcrumb"));
+        namespacedPool.returnResource(namespaced);
+        
+        namespaced = namespacedPool.getResource();
+        assertEquals("something", namespaced.get("breadcrumb"));
+    }
+
+    @Test
+    public void canCheckoutMultipleUsableResource() {
+        namespaced.set("breadcrumb", "somethingElse");
+        assertEquals("somethingElse", jedis.get("ns:breadcrumb"));
+        
+        Jedis other = namespacedPool.getResource();
+        assertEquals("somethingElse", other.get("breadcrumb"));
+        namespacedPool.returnResource(other);
+    }
 
     protected static <T> Set<T> asSet(T... values) {
         return new HashSet<T>(Arrays.asList(values));
