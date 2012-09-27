@@ -3,7 +3,7 @@
 This adds namespaces to Jedis, similar to
 [Redis::Namespace](https://github.com/defunkt/redis-namespace)
 
-Currently based on Jedis 2.0.0
+Currently based on Jedis 2.1.0  (Version 0.1 works with Jedis 2.0.0.)
 
 ## Gradle Build
 
@@ -12,7 +12,7 @@ Currently based on Jedis 2.0.0
     }
 
     dependencies {
-        classpath 'com.trigonic:jedis-namespace:0.1'
+        classpath 'com.trigonic:jedis-namespace:0.2'
     }
 
 

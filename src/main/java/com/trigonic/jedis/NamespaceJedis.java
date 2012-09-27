@@ -210,12 +210,12 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long getbit(byte[] key, long offset) {
+    public Boolean getbit(byte[] key, long offset) {
         return wrapped.getbit(namespace.add(key), offset);
     }
 
     @Override
-    public boolean getbit(String key, long offset) {
+    public Boolean getbit(String key, long offset) {
         return wrapped.getbit(namespace.add(key), offset);
     }
 
@@ -254,13 +254,13 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long hdel(byte[] key, byte[] field) {
-        return wrapped.hdel(namespace.add(key), field);
+    public Long hdel(byte[] key, byte[]... fields) {
+        return wrapped.hdel(namespace.add(key), fields);
     }
 
     @Override
-    public Long hdel(String key, String field) {
-        return wrapped.hdel(namespace.add(key), field);
+    public Long hdel(String key, String... fields) {
+        return wrapped.hdel(namespace.add(key), fields);
     }
 
     @Override
@@ -459,13 +459,13 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long lpush(byte[] key, byte[] string) {
-        return wrapped.lpush(namespace.add(key), string);
+    public Long lpush(byte[] key, byte[]... strings) {
+        return wrapped.lpush(namespace.add(key), strings);
     }
 
     @Override
-    public Long lpush(String key, String string) {
-        return wrapped.lpush(namespace.add(key), string);
+    public Long lpush(String key, String... strings) {
+        return wrapped.lpush(namespace.add(key), strings);
     }
 
     @Override
@@ -683,13 +683,13 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long rpush(byte[] key, byte[] string) {
-        return wrapped.rpush(namespace.add(key), string);
+    public Long rpush(byte[] key, byte[]... strings) {
+        return wrapped.rpush(namespace.add(key), strings);
     }
 
     @Override
-    public Long rpush(String key, String string) {
-        return wrapped.rpush(namespace.add(key), string);
+    public Long rpush(String key, String... strings) {
+        return wrapped.rpush(namespace.add(key), strings);
     }
 
     @Override
@@ -703,13 +703,13 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long sadd(byte[] key, byte[] member) {
-        return wrapped.sadd(namespace.add(key), member);
+    public Long sadd(byte[] key, byte[]... members) {
+        return wrapped.sadd(namespace.add(key), members);
     }
 
     @Override
-    public Long sadd(String key, String member) {
-        return wrapped.sadd(namespace.add(key), member);
+    public Long sadd(String key, String... members) {
+        return wrapped.sadd(namespace.add(key), members);
     }
 
     @Override
@@ -763,12 +763,12 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long setbit(byte[] key, long offset, byte[] value) {
+    public Boolean setbit(byte[] key, long offset, byte[] value) {
         return wrapped.setbit(namespace.add(key), offset, value);
     }
 
     @Override
-    public boolean setbit(String key, long offset, boolean value) {
+    public Boolean setbit(String key, long offset, boolean value) {
         return wrapped.setbit(namespace.add(key), offset, value);
     }
 
@@ -797,12 +797,12 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public long setrange(byte[] key, long offset, byte[] value) {
+    public Long setrange(byte[] key, long offset, byte[] value) {
         return wrapped.setrange(namespace.add(key), offset, value);
     }
 
     @Override
-    public long setrange(String key, long offset, String value) {
+    public Long setrange(String key, long offset, String value) {
         return wrapped.setrange(namespace.add(key), offset, value);
     }
 
@@ -932,13 +932,13 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long srem(byte[] key, byte[] member) {
-        return wrapped.srem(namespace.add(key), member);
+    public Long srem(byte[] key, byte[]... members) {
+        return wrapped.srem(namespace.add(key), members);
     }
 
     @Override
-    public Long srem(String key, String member) {
-        return wrapped.srem(namespace.add(key), member);
+    public Long srem(String key, String... members) {
+        return wrapped.srem(namespace.add(key), members);
     }
 
     @Override
@@ -1102,7 +1102,7 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Set<String> zrange(String key, int start, int end) {
+    public Set<String> zrange(String key, long start, long end) {
         return wrapped.zrange(namespace.add(key), start, end);
     }
 
@@ -1162,7 +1162,7 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Set<Tuple> zrangeWithScores(String key, int start, int end) {
+    public Set<Tuple> zrangeWithScores(String key, long start, long end) {
         return wrapped.zrangeWithScores(namespace.add(key), start, end);
     }
 
@@ -1177,13 +1177,13 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long zrem(byte[] key, byte[] member) {
-        return wrapped.zrem(namespace.add(key), member);
+    public Long zrem(byte[] key, byte[]... members) {
+        return wrapped.zrem(namespace.add(key), members);
     }
 
     @Override
-    public Long zrem(String key, String member) {
-        return wrapped.zrem(namespace.add(key), member);
+    public Long zrem(String key, String... members) {
+        return wrapped.zrem(namespace.add(key), members);
     }
 
     @Override
@@ -1192,7 +1192,7 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Long zremrangeByRank(String key, int start, int end) {
+    public Long zremrangeByRank(String key, long start, long end) {
         return wrapped.zremrangeByRank(namespace.add(key), start, end);
     }
 
@@ -1212,7 +1212,7 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Set<String> zrevrange(String key, int start, int end) {
+    public Set<String> zrevrange(String key, long start, long end) {
         return wrapped.zrevrange(namespace.add(key), start, end);
     }
 
@@ -1272,7 +1272,7 @@ public class NamespaceJedis extends Jedis {
     }
 
     @Override
-    public Set<Tuple> zrevrangeWithScores(String key, int start, int end) {
+    public Set<Tuple> zrevrangeWithScores(String key, long start, long end) {
         return wrapped.zrevrangeWithScores(namespace.add(key), start, end);
     }
 

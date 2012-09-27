@@ -131,10 +131,9 @@ public class NamespaceJedisTest {
         pipeline.sync();
 
         assertEquals(asSet("foo", "bar", "baz"), response1.get());
-        // TODO: uncomment these when Jedis 2.1.0 is released
-        //assertNull(response2.get());
-        //assertNull(response3.get());
-        //assertNull(response4.get());
+        assertNull(response2.get());
+        assertNull(response3.get());
+        assertNull(response4.get());
         assertEquals(asSet(), response5.get());
     }
 
@@ -380,9 +379,8 @@ public class NamespaceJedisTest {
         
         pipeline.sync();
         
-        // TODO: uncomment these when Jedis 2.1.0 is released
-        //assertNull(response1.get());
-        //assertNull(response2.get());        
+        assertNull(response1.get());
+        assertNull(response2.get());        
         assertEquals(Long.valueOf(4), response3.get());
         assertEquals("10", response4.get());
         assertEquals(asList("20", "30"), response5.get());

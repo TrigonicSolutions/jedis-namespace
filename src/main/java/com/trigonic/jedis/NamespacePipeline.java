@@ -119,7 +119,7 @@ public class NamespacePipeline extends Pipeline {
     }
 
     @Override
-    public Response<String> get(byte[] key) {
+    public Response<byte[]> get(byte[] key) {
         return super.get(namespace.add(key));
     }
 
@@ -139,7 +139,7 @@ public class NamespacePipeline extends Pipeline {
     }
 
     @Override
-    public Response<String> getSet(byte[] key, byte[] value) {
+    public Response<byte[]> getSet(byte[] key, byte[] value) {
         return super.getSet(namespace.add(key), value);
     }
 
@@ -664,7 +664,7 @@ public class NamespacePipeline extends Pipeline {
     }
 
     @Override
-    public Response<List<String>> sort(byte[] key) {
+    public Response<Long> sort(byte[] key) {
         return super.sort(namespace.add(key));
     }
 
@@ -684,7 +684,7 @@ public class NamespacePipeline extends Pipeline {
     }
 
     @Override
-    public Response<List<String>> sort(String key) {
+    public Response<Long> sort(String key) {
         return super.sort(namespace.add(key));
     }
 

@@ -4,7 +4,7 @@ apply plugin: 'signing'
 apply plugin: 'eclipse'
 
 group = 'com.trigonic'
-version = '0.1'
+version = '0.2'
 
 def props = new Properties();
 def localProperties = new File("local.properties")
@@ -20,12 +20,12 @@ repositories {
 }
 
 dependencies {
-    compile 'redis.clients:jedis:2.0.0'
-    compile 'com.google.guava:guava:10.0.1'
+    compile 'redis.clients:jedis:2.1.0'
+    compile 'com.google.guava:guava:11.0.1'
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.2'
     compile 'joda-time:joda-time:2.0'
 
-    testCompile 'junit:junit:4.+'
+    testCompile 'junit:junit:4.10'
     testCompile 'org.easymock:easymock:3.0'
 
     testRuntime 'org.slf4j:slf4j-simple:1.6.1'
