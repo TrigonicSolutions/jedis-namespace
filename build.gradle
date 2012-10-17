@@ -1,18 +1,18 @@
 apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'signing'
+apply plugin: 'nexus'
 apply plugin: 'eclipse'
 
 group = 'com.trigonic'
-version = '0.2'
+version = '0.2-SNAPSHOT'
 
-def props = new Properties();
-def localProperties = new File("local.properties")
-if (localProperties.exists()) localProperties.withInputStream { props.load(it) }
-props.each { project.ext.setProperty(it.key, it.value) }
+buildscript {
+    repositories {
+        mavenCentral()
+    }
 
-configurations {
-    deployerJars
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.2'
+    }
 }
 
 repositories {
@@ -29,8 +29,6 @@ dependencies {
     testCompile 'org.easymock:easymock:3.0'
 
     testRuntime 'org.slf4j:slf4j-simple:1.6.1'
-
-    deployerJars 'org.apache.maven.wagon:wagon-http:1.0-beta-7'
 }
 
 task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
@@ -49,56 +47,42 @@ artifacts {
     archives packageSources
 }
 
-signing {
-    sign configurations.archives
-}
+modifyPom {
+    project {
+        name 'jedis-namespace'
+        packaging 'jar'
+        description 'Namespace support for Jedis keys'
+        url 'https://github.com/TrigonicSolutions/jedis-namespace'
+        inceptionYear '2011'
 
-uploadArchives {
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJars
-
-        beforeDeployment { MavenDeployment deployment -> signPom(deployment) }
-
-        repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
-            authentication(userName: props.get('maven.repository.user'), password: props.get('maven.repository.password'))
+        parent {
+            groupId 'org.sonatype.oss'
+            artifactId 'oss-parent'
+            version '7'
         }
-
-        pom.project {
-            name 'jedis-namespace'
-            packaging 'jar'
-            description 'Namespace support for Jedis keys'
-            url 'https://github.com/TrigonicSolutions/jedis-namespace'
-            inceptionYear '2011'
-
-            parent {
-                groupId 'org.sonatype.oss'
-                artifactId 'oss-parent'
-                version '7'
+ 
+        scm {
+            url 'scm:git://github.com/TrigonicSolutions/jedis-namespace.git'
+            connection 'scm:git://github.com/TrigonicSolutions/jedis-namespace.git'
+        }
+ 
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
             }
-     
-            scm {
-                url 'scm:git://github.com/TrigonicSolutions/jedis-namespace.git'
-                connection 'scm:git://github.com/TrigonicSolutions/jedis-namespace.git'
-            }
-     
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
+        }
+ 
+        developers {
+            developer {
+                id 'akrueger'
+                name 'Alan Krueger'
+                email 'alan@trigonic.com'
+                roles{
+                    role 'Developer'
                 }
-            }
-     
-            developers {
-                developer {
-                    id 'akrueger'
-                    name 'Alan Krueger'
-                    email 'alan@trigonic.com'
-                    roles{
-                        role 'Developer'
-                    }
-                    timezone '-6'
-                }
+                timezone '-6'
             }
         }
     }
